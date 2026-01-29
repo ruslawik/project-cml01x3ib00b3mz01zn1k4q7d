@@ -18,29 +18,37 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   disabled = false,
 }) => {
   return (
-    <View style={styles.board}>
-      {board.map((cell, index) => (
-        <GameCell
-          key={index}
-          value={cell}
-          position={index as CellPosition}
-          onPress={onCellPress}
-          isWinning={winningCells.includes(index)}
-          disabled={disabled}
-        />
-      ))}
+    <View style={styles.container}>
+      <View style={styles.board}>
+        {board.map((cell, index) => (
+          <GameCell
+            key={index}
+            value={cell}
+            position={index as CellPosition}
+            onPress={onCellPress}
+            isWinning={winningCells.includes(index)}
+            disabled={disabled}
+          />
+        ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing.md,
+  },
   board: {
-    width: 300,
-    height: 300,
+    width: 312,
+    height: 312,
+    backgroundColor: theme.colors.gridBackground,
+    borderRadius: theme.borderRadius.lg,
+    padding: 6,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.sm,
+    ...theme.shadows.card,
   },
 });

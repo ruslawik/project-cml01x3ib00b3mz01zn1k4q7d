@@ -27,7 +27,7 @@ export const GameCell: React.FC<GameCellProps> = ({
       // Animate cell when value is set
       Animated.sequence([
         Animated.timing(scaleAnim, {
-          toValue: 1.2,
+          toValue: 1.15,
           duration: 150,
           useNativeDriver: false,
         }),
@@ -52,13 +52,13 @@ export const GameCell: React.FC<GameCellProps> = ({
       Animated.loop(
         Animated.sequence([
           Animated.timing(winAnim, {
-            toValue: 1.1,
-            duration: 500,
+            toValue: 1.05,
+            duration: 600,
             useNativeDriver: false,
           }),
           Animated.timing(winAnim, {
             toValue: 1,
-            duration: 500,
+            duration: 600,
             useNativeDriver: false,
           }),
         ])
@@ -91,48 +91,54 @@ export const GameCell: React.FC<GameCellProps> = ({
   };
 
   return (
-    <View style={[styles.cellContainer, { overflow: 'hidden', borderRadius: theme.borderRadius.md }]}>
-      <Pressable
-        style={getCellStyle()}
-        onPress={handlePress}
-        android_ripple={{ color: theme.colors.accent }}
-      >
-        <Animated.View
-          style={[
-            styles.cellContent,
-            {
-              transform: [
-                { scale: scaleAnim },
-                { scale: isWinning ? winAnim : 1 },
-              ],
-              opacity: value ? opacityAnim : 0.3,
-            },
-          ]}
+    <View style={styles.cellContainer}>
+      <View style={[styles.cellWrapper, { overflow: 'hidden', borderRadius: theme.borderRadius.sm }]}>
+        <Pressable
+          style={getCellStyle()}
+          onPress={handlePress}
+          android_ripple={{ color: theme.colors.accent }}
         >
-          <Text style={[styles.cellText, { color: getTextColor() }]}>
-            {value || ''}
-          </Text>
-        </Animated.View>
-      </Pressable>
+          <Animated.View
+            style={[
+              styles.cellContent,
+              {
+                transform: [
+                  { scale: scaleAnim },
+                  { scale: isWinning ? winAnim : 1 },
+                ],
+                opacity: value ? opacityAnim : 1,
+              },
+            ]}
+          >
+            <Text style={[styles.cellText, { color: getTextColor() }]}>
+              {value || ''}
+            </Text>
+          </Animated.View>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cellContainer: {
-    flex: 1,
+    width: '33.333%',
     aspectRatio: 1,
-    margin: theme.spacing.xs,
+    padding: 3,
+  },
+  cellWrapper: {
+    flex: 1,
+    ...theme.shadows.button,
   },
   cell: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: theme.colors.border,
   },
   pressable: {
-    opacity: 0.8,
+    opacity: 0.9,
   },
   cellContent: {
     flex: 1,
@@ -141,8 +147,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cellText: {
-    fontSize: 48,
-    fontWeight: 'bold',
+    fontSize: 42,
+    fontWeight: '600',
     textAlign: 'center',
   },
 });
